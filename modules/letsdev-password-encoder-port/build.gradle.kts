@@ -22,24 +22,24 @@ dependencies {
 
 }
 
-//publishing {
-//    publications {
-//        create<MavenPublication>("mavenJava") {
-//            from(components["java"])
-//            groupId = "com.github.merge-simpson"
-//            artifactId = project.name
-//            version = project.version.toString()
-//        }
-//    }
-//
-//    repositories {
-//        maven {
-//            name = "localMaven"
-//            url = uri("${rootProject.projectDir}/build/repos")
-//        }
-//    }
-//}
-//
-//tasks.named("publishToMavenLocal").configure {
-//    dependsOn("assemble")
-//}
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components["java"])
+            groupId = "com.github.merge-simpson"
+            artifactId = project.name
+            version = project.version.toString()
+        }
+    }
+
+    repositories {
+        maven {
+            name = "localMaven"
+            url = uri("${rootProject.projectDir}/build/repos")
+        }
+    }
+}
+
+tasks.named("publishToMavenLocal").configure {
+    dependsOn("assemble")
+}
