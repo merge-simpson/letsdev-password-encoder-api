@@ -24,10 +24,12 @@ dependencies {
 
 # Features
 
-- Password Encoder Ports (Independent of Spring Crypto)
-- Exceptions
-- Options
-- Auto Configuration
+- Password Encoder Ports (independent of Spring Crypto, or any else libraries)
+- Exceptions for options, generation, encryption of password encoders.
+- Options for password encryption
+- Apply auto configuration
+  ([org.springframework.boot.autoconfigure.AutoConfiguration.imports 
+  file](src%2Fmain%2Fresources%2FMATE-INF%2Fspring%2Forg.springframework.boot.autoconfigure.AutoConfiguration.imports))
   - Scan Properties
     ```yaml
     # 모든 속성은 선택적입니다.

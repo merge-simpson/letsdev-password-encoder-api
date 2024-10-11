@@ -1,7 +1,7 @@
 package letsdev.core.password.encoder.option;
 
 import letsdev.core.password.encoder.GeneralPasswordEncoderType.Argon2Variant;
-import letsdev.core.password.exception.PasswordEncoderGenerationException;
+import letsdev.core.password.exception.PasswordEncoderOptionErrorCode;
 
 /**
  *
@@ -95,41 +95,56 @@ public record Argon2idPasswordEncoderOption(
         }
 
         public Argon2PasswordEncoderOption build() {
+            var ARGON2_SALT_LENGTH_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_SALT_LENGTH_NON_POSITIVE;
+            var ARGON2_HASH_LENGTH_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_HASH_LENGTH_NON_POSITIVE;
+            var ARGON2_PARALLELISM_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_PARALLELISM_NON_POSITIVE;
+            var ARGON2_ITERATIONS_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_ITERATIONS_NON_POSITIVE;
+            var ARGON2_ALPHA_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_ALPHA_NON_POSITIVE;
+            var ARGON2_MEMORY_GAIN_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_MEMORY_GAIN_NON_POSITIVE;
+            var ARGON2_MEMORY_COST_NON_POSITIVE =
+                    PasswordEncoderOptionErrorCode.ARGON2_MEMORY_COST_NON_POSITIVE;
+
             int memory = memoryInput != null ? memoryInput : 0;
             if (saltLength == null) {
                 saltLength = 16;
             } else if (saltLength <= 0) {
-                throw new PasswordEncoderGenerationException("salt length는 양수여야 합니다.");
+                throw ARGON2_SALT_LENGTH_NON_POSITIVE.defaultException();
             }
 
             if (hashLength == null) {
                 hashLength = 32;
             } else if (hashLength <= 0) {
-                throw new PasswordEncoderGenerationException("hash length는 양수여야 합니다.");
+                throw ARGON2_HASH_LENGTH_NON_POSITIVE.defaultException();
             }
 
             if (parallelism == null) {
                 parallelism = 1;
             } else if (parallelism <= 0) {
-                throw new PasswordEncoderGenerationException("parallelism은 양수여야 합니다.");
+                throw ARGON2_PARALLELISM_NON_POSITIVE.defaultException();
             }
 
             if (iterations == null) {
                 iterations = 1;
             } else if (iterations <= 0) {
-                throw new PasswordEncoderGenerationException("iterations는 양수여야 합니다.");
+                throw ARGON2_ITERATIONS_NON_POSITIVE.defaultException();
             }
 
             if (alpha == null) {
                 alpha = 0.95f;
-            } else if (alpha <= 0 || alpha > 1F) {
-                throw new PasswordEncoderGenerationException("iterations는 양수여야 합니다.");
+            } else if (alpha <= 0) {
+                throw ARGON2_ALPHA_NON_POSITIVE.defaultException();
             }
 
             if (gain == null) {
                 gain = 1f;
             } else if (gain <= 0) {
-                throw new PasswordEncoderGenerationException("memory coefficient는 양수여야 합니다.");
+                throw ARGON2_MEMORY_GAIN_NON_POSITIVE.defaultException();
             }
 
             if (memoryInput == null) {
@@ -138,7 +153,7 @@ public record Argon2idPasswordEncoderOption(
                 memory = (int) Math.ceil(num / den);
                 memoryInput = memory;
             } else if (memoryInput <= 0) {
-                throw new PasswordEncoderGenerationException("memory cost는 양수여야 합니다.");
+                throw ARGON2_MEMORY_COST_NON_POSITIVE.defaultException();
             }
 
             memory = (int) (memory * gain);

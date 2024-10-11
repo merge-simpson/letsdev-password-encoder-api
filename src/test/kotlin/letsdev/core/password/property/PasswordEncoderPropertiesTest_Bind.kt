@@ -15,7 +15,6 @@ class PasswordEncoderPropertiesTest_Bind : StringSpec({
     isolationMode = IsolationMode.InstancePerTest // 테스트마다 새 인스턴스 생성
 
     "속성을 생략하면 -> 기본값이 올바르게 바인딩 된다." {
-        // 빈 속성 맵을 통해 기본 값이 설정되는지 테스트
         val source = MapConfigurationPropertySource(mapOf<String, Any>())
         val binder = Binder(source)
 
@@ -29,7 +28,6 @@ class PasswordEncoderPropertiesTest_Bind : StringSpec({
     }
 
     "속성을 입력하면 -> 입력된 값이 올바르게 바인딩 된다." {
-        // 속성에 값을 지정하여 바인딩되는지 테스트
         val source = MapConfigurationPropertySource(mapOf(
             "letsdev.password.default-encoder" to "argon2",
             "letsdev.password.bcrypt.strength" to "12",
