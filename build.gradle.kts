@@ -1,3 +1,4 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
@@ -5,6 +6,8 @@ plugins {
     id("java-library")
     id("org.springframework.boot") version "3.3.4"
     id("io.spring.dependency-management") version "1.1.6"
+    kotlin("jvm") version "1.9.22"
+    kotlin("plugin.spring") version "1.9.22"
     id("maven-publish")
 }
 
@@ -33,6 +36,13 @@ repositories {
 dependencies {
     api(portProject) // api("com.github.merge-simpson:letsdev-password-encoder")
     api(exceptionProject)
+
+    // test
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation(kotlin("test"))
+    testImplementation("io.kotest:kotest-runner-junit5:5.9.1")
+    testImplementation("org.jetbrains.kotlin:kotlin-reflect")
+    testImplementation("io.mockk:mockk:1.13.12")
 }
 
 tasks.withType<Test> {
@@ -46,6 +56,12 @@ tasks.named<BootJar>("bootJar") {
 tasks.named<Jar>("jar") {
     enabled = true
     archiveClassifier.set("") // remove suffix "-plain"
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        jvmTarget = "21"
+    }
 }
 
 sourceSets {

@@ -2,9 +2,9 @@
 
 ## Bundled
 
-- letsdev-password-encoder-port
+- letsdev-password-encoder-port  
   `com.github.merge-simpson:letsdev-password-encoder-port:${version}`
-- letsdev-password-encoder-exception
+- letsdev-password-encoder-exception  
   `com.github.merge-simpson:letsdev-password-encoder-exception:${version}`
 
 ## Installation
@@ -33,7 +33,7 @@ dependencies {
     # 모든 속성은 선택적입니다.
     letsdev:
       password:
-        default-encoder: bcrypt
+        default-encoder: bcrypt # support: bcrypt, argon2(same to argon2id), argon2id, argon2d
         bcrypt:
           strength: 10
         argon2:
